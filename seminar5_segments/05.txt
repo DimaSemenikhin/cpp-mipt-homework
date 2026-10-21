@@ -1,0 +1,16 @@
+&a - bss
+&b - data
+&c - rodata
+&d - stack
+&e - bss
+&p1 - stack
+p1 - heap
+p1 + 5 - heap
+&s - bss
+s - rodata
+&ps - stack
+ps - rodata
+f - text
+&f - text
+main - text
+"fox" - rodata

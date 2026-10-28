@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
 #include <assert.h>
 
 #define DEFINE_LIST(T, TYPE_NAME) \
@@ -20,6 +21,20 @@
     }; \
     typedef struct List_##TYPE_NAME List_##TYPE_NAME; \
 \
+    void push_back_##TYPE_NAME(List_##TYPE_NAME* pl, T value) { \
+        Node_##TYPE_NAME* new_node = (Node_##TYPE_NAME*)malloc(sizeof(Node_##TYPE_NAME)); \
+        assert(new_node != NULL); \
+        new_node->value = value; \
+        new_node->next = NULL; \
+        new_node->prev = pl->tail; \
+        if (pl->tail != NULL) { \
+            pl->tail->next = new_node; \
+        } else { \
+            pl->head = new_node; \
+        } \
+        pl->tail = new_node; \
+        pl->size++; \
+    } \
     List_##TYPE_NAME init_##TYPE_NAME(size_t n) { \
         List_##TYPE_NAME new_list = {NULL, NULL, 0}; \
         for (size_t i = 0; i < n; ++i) { \
@@ -39,20 +54,6 @@
         printf("\n"); \
     } \
 \
-    void push_back_##TYPE_NAME(List_##TYPE_NAME* pl, T value) { \
-        Node_##TYPE_NAME* new_node = (Node_##TYPE_NAME*)malloc(sizeof(Node_##TYPE_NAME)); \
-        assert(new_node != NULL); \
-        new_node->value = value; \
-        new_node->next = NULL; \
-        new_node->prev = pl->tail; \
-        if (pl->tail != NULL) { \
-            pl->tail->next = new_node; \
-        } else { \
-            pl->head = new_node; \
-        } \
-        pl->tail = new_node; \
-        pl->size++; \
-    } \
 \
     T pop_back_##TYPE_NAME(List_##TYPE_NAME* pl) { \
         assert(pl->tail != NULL); \
